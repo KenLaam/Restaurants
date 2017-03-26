@@ -9,10 +9,12 @@ import {
     View,
     Navigator,
     ListView,
+    Button
 } from 'react-native';
 
 import Image from 'react-native-image-progress';
-import Progress from 'react-native-progress';
+
+import Filter from './filter';
 
 export default class Home extends Component {
     constructor(props) {
@@ -84,8 +86,13 @@ export default class Home extends Component {
     }
 
     render() {
+        const {navigator} = this.props;
         return (
             <View>
+                <Button
+                    title="Setting"
+                    onPress={() => this._goFilter(navigator)}
+                />
                 <ListView
                     enableEmptySections={true}
                     dataSource={this.state.restaurantDS}
@@ -106,5 +113,11 @@ export default class Home extends Component {
                 <Text>{restaurant.name}</Text>
             </View>
         )
+    }
+
+    _goFilter = (navigator) => {
+        navigator.push({
+            component: Filter,
+        })
     }
 }
