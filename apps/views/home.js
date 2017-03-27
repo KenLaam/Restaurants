@@ -38,43 +38,55 @@ export class Home extends Component {
     componentWillReceiveProps(nextProps) {
         console.log(nextProps.filter);
         this.props = nextProps;
-        this._fetchData()
+        this._fetchData("");
     }
 
     componentWillMount() {
-        this._fetchData();
+        this._fetchData("");
     }
 
-    _fetchData() {
-        var radius = this.props.filter ? this.props.filter.radius : "";
-        radius = parseInt(radius / 1609);
-        if (!radius || radius === 0) {
-            radius = "";
+    async _fetchData(keyword) {
+        let queryStringArr = [];
+        if (this.props.filter) {
+            let params = this.props.filter;
+            for (const key of Object.keys(params)) {
+                queryStringArr.push(`${key}=${params[key]}`);
+            }
+
+            if (keyword.length !== 0) {
+                queryStringArr.push(`term=${keyword}`);
+            }
         }
-        console.log("KenK11 radius " + radius);
-        const request = new Request(`https://api.yelp.com/v3/businesses/search?latitude=${locationLat}&longitude=${locationLong}&radius=${radius}`, {
+
+        const queryString = queryStringArr.join('&');
+        console.log("KenK11 " + queryString);
+        const request = new Request(`https://api.yelp.com/v3/businesses/search?latitude=${locationLat}&longitude=${locationLong}&${queryString}`, {
             method: 'GET',
             headers: new Headers({
                 'Authorization': "Bearer 3cRNmF8k-aE_vSGrIeE0BYFmSxXxcx1vA-3_cJA1W-zRZPf0I6Wy2ZY5D77d2QScP6B64nG0jndzU92PURmGJmUEWswp2SHwatipvoGzbKkdNpMWA3eUt_3UlmnXWHYx",
             })
         });
 
-        return fetch(request)
-            .then((response) => response.json())
-            .then((json) => {
-                console.log("Restaurant " + json.businesses.length);
-                this.setState({
-                    offset: this.state.offset + 20,
-                    restaurantDS: this.state.restaurantDS.cloneWithRows(json.businesses)
+        try {
+            fetch(request)
+                .then((response) => response.json())
+                .then((json) => {
+                    console.log("Restaurant " + json.businesses.length);
+                    this.setState({
+                        offset: this.state.offset + 20,
+                        restaurantDS: this.state.restaurantDS.cloneWithRows(json.businesses)
+                    })
                 })
-            })
-            .catch(error => {
-                console.log("Error " + error.message)
-            })
+        } catch (error) {
+            console.log("Error " + error.message)
+        }
+
     }
 
-    _search = (keyword) => {
+    _searchKeyword = (keyword) => {
+        console.log("KenK11 searching  " + keyword);
 
+        this._fetchData(keyword)
     }
 
     render() {
@@ -84,7 +96,7 @@ export class Home extends Component {
                 <View style={styles.header}>
                     <TextInput
                         style={{flex: 3}}
-                        onChangeText={this._search}
+                        onChangeText={this._searchKeyword}
                     />
                     <Button
                         style={{flex: 1}}

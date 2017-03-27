@@ -26,6 +26,10 @@ export default class RestaurantCell extends Component {
                 <View style={styles.description}>
                     <View>
                         <Text>{restaurant.name}</Text>
+                        <Text>Rating {restaurant.rating}</Text>
+                        <Text>Price {restaurant.price}</Text>
+                        <Text>Phone {restaurant.phone}</Text>
+                        <Text>Distance {restaurant.distance}</Text>
                     </View>
                 </View>
             </View>
