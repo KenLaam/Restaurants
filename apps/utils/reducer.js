@@ -3,10 +3,10 @@
  */
 export const settingReducer = (state = {}, action) => {
     switch (action.type) {
-        case 'SLIDER':
+        case 'FILTER':
             return {
-                minStars: action.payload,
-            }
+                radius: action.params,
+            };
 
         default:
             return state;
@@ -14,10 +14,10 @@ export const settingReducer = (state = {}, action) => {
 };
 
 export const actionCreators = {
-    setMinStars: (value) => {
+    setFilter: (value) => {
         return {
-            type: 'SLIDER',
-            payload: value,
+            type: 'FILTER',
+            params: value,
         }
     }
-}
+};

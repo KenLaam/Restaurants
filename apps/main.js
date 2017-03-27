@@ -12,9 +12,9 @@ import {
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 import React, {Component} from 'react';
-import {settingReducer} from './reducer';
+import {settingReducer} from './utils/reducer';
 
-import Home from './home';
+import Home from './views/home';
 
 const store = createStore(settingReducer);
 
