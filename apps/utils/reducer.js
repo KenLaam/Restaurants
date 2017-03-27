@@ -5,7 +5,7 @@ export const settingReducer = (state = {}, action) => {
     switch (action.type) {
         case 'FILTER':
             return {
-                radius: action.params,
+                filter: action.params,
             };
 
         default:

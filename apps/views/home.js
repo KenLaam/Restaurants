@@ -17,6 +17,9 @@ import {connect} from 'react-redux';
 import RestaurantCell from './restaurantCell'
 import Filter from './filter';
 
+const locationLat = "37.7616968";
+const locationLong = "-122.4225494";
+
 export class Home extends Component {
     constructor(props) {
         super(props);
@@ -33,7 +36,7 @@ export class Home extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.radius);
+        console.log(nextProps.filter);
         this.props = nextProps;
         this._fetchData()
     }
@@ -43,23 +46,23 @@ export class Home extends Component {
     }
 
     _fetchData() {
-        var radius = this.props.radius || "";
+        var radius = this.props.filter ? this.props.filter.radius : "";
         radius = parseInt(radius / 1609);
         if (!radius || radius === 0) {
             radius = "";
         }
-        console.log("KenK11 radius " + this.props.radius);
         console.log("KenK11 radius " + radius);
-        const request = new Request(`https://api.yelp.com/v3/businesses/search?latitude=40.7058316&longitude=-74.2581937&radius=${radius}`, {
+        const request = new Request(`https://api.yelp.com/v3/businesses/search?latitude=${locationLat}&longitude=${locationLong}&radius=${radius}`, {
             method: 'GET',
             headers: new Headers({
                 'Authorization': "Bearer 3cRNmF8k-aE_vSGrIeE0BYFmSxXxcx1vA-3_cJA1W-zRZPf0I6Wy2ZY5D77d2QScP6B64nG0jndzU92PURmGJmUEWswp2SHwatipvoGzbKkdNpMWA3eUt_3UlmnXWHYx",
             })
-        })
+        });
 
         return fetch(request)
             .then((response) => response.json())
             .then((json) => {
+                console.log("Restaurant " + json.businesses.length);
                 this.setState({
                     offset: this.state.offset + 20,
                     restaurantDS: this.state.restaurantDS.cloneWithRows(json.businesses)

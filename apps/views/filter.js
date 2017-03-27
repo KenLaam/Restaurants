@@ -22,7 +22,7 @@ export class Filter extends Component {
         super(props);
         this.state = {
             radius: (this.props && this.props.radius) || 0,
-            open_now: false,
+            open_now: (this.props && this.props.open_now) || false,
         }
     }
 
@@ -76,7 +76,10 @@ export class Filter extends Component {
 
     _goSave = () => {
         const {dispatch, navigator} = this.props;
-        dispatch(actionCreators.setFilter(this.state.radius));
+        dispatch(actionCreators.setFilter({
+            radius: this.state.radius,
+            open_now: this.state.open_now,
+        }));
         navigator.pop();
     };
 
@@ -86,7 +89,8 @@ export class Filter extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    radius: state.radius,
+    radius: state.filter ? state.filter.radius : 0,
+    open_now: state.filter ? state.filter.open_now : false,
 });
 
 export default connect(mapStateToProps)(Filter);
