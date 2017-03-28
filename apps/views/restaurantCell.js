@@ -29,7 +29,7 @@ export default class RestaurantCell extends Component {
                         <Text>Rating {restaurant.rating}</Text>
                         <Text>Price {restaurant.price}</Text>
                         <Text>Phone {restaurant.phone}</Text>
-                        <Text>Distance {restaurant.distance}</Text>
+                        <Text>Distance {Math.round(restaurant.distance * 100) / 100}</Text>
                     </View>
                 </View>
             </View>

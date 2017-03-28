@@ -45,17 +45,17 @@ export class Home extends Component {
         this._fetchData("");
     }
 
-    async _fetchData(keyword) {
+    async _fetchData() {
         let queryStringArr = [];
         if (this.props.filter) {
             let params = this.props.filter;
             for (const key of Object.keys(params)) {
                 queryStringArr.push(`${key}=${params[key]}`);
             }
+        }
 
-            if (keyword.length !== 0) {
-                queryStringArr.push(`term=${keyword}`);
-            }
+        if (this.state.keyword.length !== 0) {
+            queryStringArr.push(`term=${this.state.keyword}`);
         }
 
         const queryString = queryStringArr.join('&');
@@ -85,8 +85,11 @@ export class Home extends Component {
 
     _searchKeyword = (keyword) => {
         console.log("KenK11 searching  " + keyword);
+        this.setState({
+            keyword
+        });
 
-        this._fetchData(keyword)
+        this._fetchData()
     }
 
     render() {

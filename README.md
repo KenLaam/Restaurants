@@ -7,16 +7,16 @@ Time spent: **X** hours spent in total
 ## User Stories
 
 The following **required** functionality is completed:
-- [ ] Login Screen, just a page before go to Homepage
-- [ ] Search results page
+- [x] Login Screen, just a page before go to Homepage
+- [x] Search results page
    - [ ] Add filter button and search text input.
-   - [ ] Display items, rows should be dynamic height according to the content height.
-   - [ ] Infinite scroll for restaurant results.
-- [ ] Filter page: (Unfortunately, not all the filters in the real Yelp App, are supported in the Yelp API)
-   - [ ] Categories should show a subset of the full list, and when click "Show all" row to expand all subset.
-   - [ ] Clicking on the "Search" button should dismiss the filters page and trigger the search with the new filter settings.
-   - [ ] Using Redux to storage filter data
- - [ ] Show loading page when waiting to fetch data from Yelp
+   - [x] Display items, rows should be dynamic height according to the content height.
+   - [x] Infinite scroll for restaurant results.
+- [x] Filter page: (Unfortunately, not all the filters in the real Yelp App, are supported in the Yelp API)
+   - [x] Categories should show a subset of the full list, and when click "Show all" row to expand all subset.
+   - [x] Clicking on the "Search" button should dismiss the filters page and trigger the search with the new filter settings.
+   - [x] Using Redux to storage filter data
+ - [x] Show loading page when waiting to fetch data from Yelp
 
 
 The following **optional** features are implemented:
