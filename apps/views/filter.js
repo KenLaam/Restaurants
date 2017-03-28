@@ -72,15 +72,20 @@ export class Filter extends Component {
                 <ScrollView
                     style={styles.container}
                 >
-                    <Button title="Back"
-                            onPress={() => this._goBack(navigator)}
-                    />
+                    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                        <Button title="Back"
+                                onPress={() => this._goBack(navigator)}
+                                style={{flex: 1}}
+                        />
 
-                    <Button title="Save"
-                            onPress={this._goSave}
-                    />
 
-                    <View>
+                        <Button title="Save"
+                                onPress={this._goSave}
+                                style={{flex: 1}}
+                        />
+                    </View>
+
+                    <View >
                         <Text>Open Now</Text>
                         <Switch
                             value={this.state.open_now}
@@ -100,20 +105,20 @@ export class Filter extends Component {
                     </View>
 
                     <View>
-                        <Text>{this.state.radius} m</Text>
+                        <Text>{this.state.radius} mile(s)</Text>
 
                         <Slider minimumValue={0}
-                                step={10}
+                                step={1}
                                 value={this.props.radius}
-                                maximumValue={40000}
+                                maximumValue={25}
                                 onValueChange={this._updateDistance}
                         />
                     </View>
 
                     {/*<ListView*/}
-                        {/*dataSource={this.state.categoriesDS}*/}
-                        {/*renderRow={this._renderCategoryRow}*/}
-                        {/*enableEmptySections={true}*/}
+                    {/*dataSource={this.state.categoriesDS}*/}
+                    {/*renderRow={this._renderCategoryRow}*/}
+                    {/*enableEmptySections={true}*/}
                     {/*/>*/}
                 </ScrollView>
             </View>
@@ -135,7 +140,7 @@ export class Filter extends Component {
     _goSave = () => {
         const {dispatch, navigator} = this.props;
         dispatch(actionCreators.setFilter({
-            radius: this.state.radius,
+            radius: this.state.radius * 1609,
             open_now: this.state.open_now,
             sort_by: this.state.sort_by,
         }));

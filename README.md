@@ -16,7 +16,7 @@ The following **required** functionality is completed:
    - [] Categories should show a subset of the full list, and when click "Show all" row to expand all subset.
    - [x] Clicking on the "Search" button should dismiss the filters page and trigger the search with the new filter settings.
    - [x] Using Redux to storage filter data
- - [x] Show loading page when waiting to fetch data from Yelp
+ - [ ] Show loading page when waiting to fetch data from Yelp
 
 
 The following **optional** features are implemented:

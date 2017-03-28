@@ -38,6 +38,7 @@ export class Home extends Component {
     componentWillReceiveProps(nextProps) {
         console.log(nextProps.filter);
         this.props = nextProps;
+        this.state.offset = 0;
         this._fetchData("");
     }
 
@@ -59,9 +60,7 @@ export class Home extends Component {
         }
         const queryString = queryStringArr.join('&');
 
-
-        console.log("KenK11 " + queryString);
-        const request = new Request(`https://api.yelp.com/v3/businesses/search?latitude=${locationLat}&longitude=${locationLong}&${queryString}`, {
+        const request = new Request(`https://api.yelp.com/v3/businesses/search?latitude=${locationLat}&longitude=${locationLong}&${queryString}&offset=${this.state.offset}`, {
             method: 'GET',
             headers: new Headers({
                 'Authorization': `${this.state.token}`,
@@ -75,7 +74,8 @@ export class Home extends Component {
                     console.log("Restaurant " + json.businesses.length);
                     this.setState({
                         offset: this.state.offset + 20,
-                        restaurantDS: this.state.restaurantDS.cloneWithRows(json.businesses)
+                        restaurantList: this.state.restaurantList.concat(json.businesses),
+                        restaurantDS: this.state.restaurantDS.cloneWithRows(this.state.restaurantList.concat(json.businesses))
                     })
                 })
         } catch (error) {
@@ -85,9 +85,10 @@ export class Home extends Component {
     }
 
     _searchKeyword = (keyword) => {
-        console.log("KenK11 searching  " + keyword);
         this.setState({
-            keyword
+            keyword,
+            offset: 0,
+            restaurantList: [],
         });
 
         this._fetchData()
@@ -114,6 +115,7 @@ export class Home extends Component {
                     enableEmptySections={true}
                     dataSource={this.state.restaurantDS}
                     renderRow={this._renderRow}
+                    onEndReached={() => this._fetchData()}
                 />
             </View>
         );

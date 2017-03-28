@@ -27,7 +27,7 @@ export default class RestaurantCell extends Component {
                     <View>
                         <Text>{restaurant.name}</Text>
                         <Text>Rating {restaurant.rating}</Text>
-                        <Text>Price {restaurant.price}</Text>
+                        <Text>{restaurant.price}</Text>
                         <Text>Phone {restaurant.phone}</Text>
                         <Text>Distance {Math.round(restaurant.distance * 100) / 100}</Text>
                     </View>
@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
     },
 
     description: {
-        flex: 3
+        flex: 3,
+        padding: 10,
     }
 
 });
