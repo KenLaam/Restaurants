@@ -7,6 +7,11 @@ export const settingReducer = (state = {}, action) => {
             return {
                 filter: action.params,
             };
+            
+        case 'TOKEN':
+            return {
+                token: action.params,
+            };
 
         default:
             return state;
@@ -18,6 +23,13 @@ export const actionCreators = {
         return {
             type: 'FILTER',
             params: value,
+        }
+    },
+
+    setToken: (token) => {
+        return {
+            type: 'TOKEN',
+            params: token,
         }
     }
 };

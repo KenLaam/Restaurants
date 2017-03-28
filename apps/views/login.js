@@ -9,6 +9,7 @@ import {
     View,
     Navigator,
     ListView,
+    Button
 } from 'react-native';
 
 import {actionCreators} from '../utils/reducer';
@@ -24,7 +25,7 @@ export class Login extends Component {
             >
                 <Button
                     title="Login"
-                    onPress={()=> this._login}
+                    onPress={this._login}
                 />
             </View>
         )
@@ -32,8 +33,7 @@ export class Login extends Component {
 
     _login = () => {
         this._fetchToken()
-
-    }
+    };
 
     _fetchToken() {
         const params = {
@@ -55,12 +55,19 @@ export class Login extends Component {
                 return response.json()
             })
             .then(json => {
-                var token = json.token_type + " " + json.access_token
-                console.log(token);
-                this.setState({
-                    token: token,
-                })
-                return token; // Token
+                var token = json.token_type + " " + json.access_token;
+                const {dispatch, navigator} = this.props;
+                dispatch(actionCreators.setToken(token));
+                navigator.push({
+                    component: Home,
+                });
             })
     }
 }
+
+const mapStateToProps = (state) => ({
+    token: state.token,
+});
+
+
+export default connect(mapStateToProps)(Login);

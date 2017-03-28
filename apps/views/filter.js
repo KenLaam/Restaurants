@@ -18,8 +18,6 @@ import {
 
 import {actionCreators} from '../utils/reducer';
 import {connect} from 'react-redux';
-import NavigationBar from 'react-native-navbar';
-
 
 export class Filter extends Component {
     constructor(props) {
@@ -31,6 +29,7 @@ export class Filter extends Component {
             radius: (this.props && this.props.radius) || 0,
             open_now: (this.props && this.props.open_now) || false,
             sort_by: (this.props && this.props.sort_by) || 'best_match',
+            selectedCategories: (this.props && this.props.categories) || categories,
             categoriesDS: ds.cloneWithRows(categories),
         }
     }
@@ -48,9 +47,16 @@ export class Filter extends Component {
     }
 
     _updateSortBy = (sort_by) => {
-        console.log(sort_by);
         this.setState({
             sort_by
+        })
+    }
+
+    _updateCategories = (category) => {
+        this.state.selectedCategories.forEach((value) => {
+            if (value.alias === category.alias) {
+                value.selected = category.selected;
+            }
         })
     }
 
@@ -105,9 +111,9 @@ export class Filter extends Component {
                     </View>
 
                     {/*<ListView*/}
-                    {/*dataSource={this.state.categoriesDS}*/}
-                    {/*renderRow={this._renderCategoryRow}*/}
-                    {/*enableEmptySections={true}*/}
+                        {/*dataSource={this.state.categoriesDS}*/}
+                        {/*renderRow={this._renderCategoryRow}*/}
+                        {/*enableEmptySections={true}*/}
                     {/*/>*/}
                 </ScrollView>
             </View>
@@ -118,6 +124,10 @@ export class Filter extends Component {
         return (
             <View style={{flexDirection: 'row'}}>
                 <Text>{category.title}</Text>
+                <Switch
+                    value={category.selected}
+                    onValueChange={() => this._updateCategories(category)}
+                />
             </View>
         )
     }

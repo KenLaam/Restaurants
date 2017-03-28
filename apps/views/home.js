@@ -24,12 +24,12 @@ export class Home extends Component {
     constructor(props) {
         super(props);
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
         this.state = {
-            token: "",
+            restaurantList: [],
             restaurantDS: ds.cloneWithRows([]),
             offset: 0,
             keyword: "",
+            token: props.token,
         }
 
     }
@@ -57,13 +57,14 @@ export class Home extends Component {
         if (this.state.keyword.length !== 0) {
             queryStringArr.push(`term=${this.state.keyword}`);
         }
-
         const queryString = queryStringArr.join('&');
+
+
         console.log("KenK11 " + queryString);
         const request = new Request(`https://api.yelp.com/v3/businesses/search?latitude=${locationLat}&longitude=${locationLong}&${queryString}`, {
             method: 'GET',
             headers: new Headers({
-                'Authorization': "Bearer 3cRNmF8k-aE_vSGrIeE0BYFmSxXxcx1vA-3_cJA1W-zRZPf0I6Wy2ZY5D77d2QScP6B64nG0jndzU92PURmGJmUEWswp2SHwatipvoGzbKkdNpMWA3eUt_3UlmnXWHYx",
+                'Authorization': `${this.state.token}`,
             })
         });
 
@@ -97,16 +98,16 @@ export class Home extends Component {
         return (
             <View style={{padding: 10}}>
                 <View style={styles.header}>
-                    <TextInput
-                        style={{flex: 3}}
-                        onChangeText={this._searchKeyword}
-                    />
                     <Button
                         style={{flex: 1}}
                         title="Filter"
                         onPress={() => this._goFilter(navigator)}
                     />
 
+                    <TextInput
+                        style={{flex: 3}}
+                        onChangeText={this._searchKeyword}
+                    />
                 </View>
 
                 <ListView
@@ -143,6 +144,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
     filter: state.filter,
+    token: state.token,
 });
 
 export default connect(mapStateToProps)(Home);

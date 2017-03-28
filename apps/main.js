@@ -14,6 +14,7 @@ import {createStore} from 'redux';
 import React, {Component} from 'react';
 import {settingReducer} from './utils/reducer';
 
+import Login from './views/login';
 import Home from './views/home';
 
 const store = createStore(settingReducer);
@@ -28,7 +29,7 @@ export default class App extends Component {
 
     render() {
         const defaultRoute = {
-            component: Home,
+            component: Login,
         };
 
         return (
